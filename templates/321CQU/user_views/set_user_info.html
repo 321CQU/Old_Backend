@@ -1,0 +1,51 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>设置用户信息</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>Sid</td>
+        <td>String</td>
+        <td>需设置的学号</td>
+    </tr>
+    <tr>
+        <td>UserName</td>
+        <td>String(50)</td>
+        <td>不超过50个字符的用户昵称</td>
+    </tr>
+    <tr>
+        <td>UserImg</td>
+        <td>String(256)</td>
+        <td>不超过256个字符的用户头像地址</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>学号不正确（学号中存在汉字）</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>sql语句执行错误</td>
+    </tr>
+{% endblock %}

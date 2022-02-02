@@ -1,0 +1,57 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>获取下一学期具体信息</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>UserName</td>
+        <td>String</td>
+        <td>账号</td>
+    </tr>
+    <tr>
+        <td>Password</td>
+        <td>String</td>
+        <td>密码</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>Term</td>
+        <td>String</td>
+        <td>下一学期名称</td>
+    </tr>
+    <tr>
+        <td>StartDate</td>
+        <td>String</td>
+        <td>下一学期开始日期</td>
+    </tr>
+    <tr>
+        <td>EndDate</td>
+        <td>String</td>
+        <td>下一学期结束日期</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>账号密码错误</td>
+    </tr>
+{% endblock %}

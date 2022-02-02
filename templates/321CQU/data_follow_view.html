@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>小程序相关数据追踪</title>
+{% endblock %}
+{% block body %}
+    <div style="text-align: center"><a>广告累计观看次数：{{ total_advertise_watching_times }}</a></div>
+    <div style="text-align: center"><a>总成绩订阅人数：{{ total_subscribe_num }}</a></div>
+    <div style="text-align: center"><a>总获取成绩条数：{{ total_score_num }}</a></div>
+{% endblock %}

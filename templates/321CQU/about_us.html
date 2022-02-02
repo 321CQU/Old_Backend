@@ -1,0 +1,33 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>关于我们</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>查询成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>Content(List)</td>
+        <td>string</td>
+        <td>内容信息（每一个段落都是列表单独的一个元素）</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+{% endblock %}

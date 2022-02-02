@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>321CQU api接口</title>
+{% endblock %}
+{% block body %}
+    <table border="2" align="center">
+        <tr>
+            <th>链接</th>
+            <th>功能</th>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_curr_term' %}">{%  url '321CQU:get_curr_term' %}</a> </td>
+            <td>查询当前学期相关信息</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_next_term' %}">{%  url '321CQU:get_next_term' %}</a> </td>
+            <td>查询下学期相关信息</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:stuVal' %}">{%  url '321CQU:stuVal' %}</a> </td>
+            <td>通过学号，查询学生姓名</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:total_duration' %}">{%  url '321CQU:total_duration' %}</a> </td>
+            <td>查询学生总志愿时长</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:all_activity' %}">{%  url '321CQU:all_activity' %}</a> </td>
+            <td>查询学生的所有志愿活动相关信息</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:send_volunteer_pdfs' %}">{%  url '321CQU:send_volunteer_pdfs' %}</a> </td>
+            <td>向用户发送其选择的志愿活动相关文件</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:set_user_info' %}">{%  url '321CQU:set_user_info' %}</a> </td>
+            <td>设置用户昵称、头像</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:after_advertise' %}">{%  url '321CQU:after_advertise' %}</a> </td>
+            <td>增加用户观看广告次数</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_advertise_times' %}">{%  url '321CQU:get_advertise_times' %}</a> </td>
+            <td>返回用户观看广告次数</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:send_feedback' %}">{%  url '321CQU:send_feedback' %}</a> </td>
+            <td>发送小程序反馈</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_feedback' %}">{%  url 'test_api:get_feedback' %}</a> </td>
+            <td>获取当前反馈</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:send_comment' %}">{%  url 'test_api:send_comment' %}</a> </td>
+            <td>发送反馈评论</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_comment' %}">{%  url 'test_api:get_comment' %}</a> </td>
+            <td>获取反馈评论</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:is_match' %}">{%  url '321CQU:is_match' %}</a> </td>
+            <td>统一身份认证校验</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:pg_is_match' %}">{%  url '321CQU:pg_is_match' %}</a> </td>
+            <td>研究生账号校验</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:pg_get_score' %}">{%  url '321CQU:pg_get_score' %}</a> </td>
+            <td>查询研究生成绩</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_exam' %}">{%  url '321CQU:get_exam' %}</a> </td>
+            <td>查询考试安排</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_course' %}">{%  url '321CQU:get_course' %}</a> </td>
+            <td>课表查询</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_score' %}">{%  url '321CQU:get_score' %}</a> </td>
+            <td>成绩查询</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_enrollment' %}">{%  url '321CQU:get_enrollment' %}</a> </td>
+            <td>下学期已选课表查询</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:subscribe' %}">{%  url '321CQU:subscribe' %}</a> </td>
+            <td>绑定OpenId和Sid</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:about_us' %}">{%  url '321CQU:about_us' %}</a> </td>
+            <td>回传"关于我们"界面相关信息</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:test_data' %}">{%  url '321CQU:test_data' %}</a> </td>
+            <td>用于回传任意测试数据的接口</td>
+        </tr>
+    </table>
+    <hr style="FILTER:alpha(opacity=100,finish-opacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+    <p style="text-align: center">注意：参数名后跟括号表示多个参数按顺序，作为列表，以括号中的名称返回</p>
+    <p style="text-align: center">注意：最新api请向'321CQU/test_api 发送请求'</p>
+{% endblock %}

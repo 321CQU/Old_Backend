@@ -1,0 +1,28 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>Test Data</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>Data</td>
+        <td>dict</td>
+        <td>需要回传的数据，以字典的形式传送</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>Data(list)</td>
+        <td>list</td>
+        <td>将传送的字典键值对取出，作为返回值返回</td>
+    </tr>
+{% endblock %}

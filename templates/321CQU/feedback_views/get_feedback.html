@@ -1,0 +1,78 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>获取反馈</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>Limit(可选)</td>
+        <td>int</td>
+        <td>方式1：填入数字，返回n条时间降序的反馈</td>
+    </tr>
+    <tr>
+        <td>Limit(可选)</td>
+        <td>String</td>
+        <td>方式2：填入2个数字，用","分隔，第一个数字表示反馈起始条数，第二个数字表示返回从第一个数字起始的条数</td>
+    </tr>
+    <tr>
+        <td>Limit(可选)</td>
+        <td>null</td>
+        <td>方式3：不填写该属性值，返回全部反馈</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>查询成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>FBid(FeedbackList)</td>
+        <td>int</td>
+        <td>反馈编号</td>
+    </tr>
+    <tr>
+        <td>Sid(FeedbackList)</td>
+        <td>string</td>
+        <td>反馈者学号</td>
+    </tr>
+    <tr>
+        <td>Username(FeedbackList)</td>
+        <td>string</td>
+        <td>反馈者昵称</td>
+    </tr>
+    <tr>
+        <td>UserImg(FeedbackList)</td>
+        <td>string</td>
+        <td>反馈者头像地址</td>
+    </tr>
+    <tr>
+        <td>Content(FeedbackList)</td>
+        <td>string</td>
+        <td>反馈正文</td>
+    </tr>
+    <tr>
+        <td>Time(FeedbackList)</td>
+        <td>string</td>
+        <td>反馈日期</td>
+    </tr>
+    <tr>
+        <td>CommentNum(FeedbackList)</td>
+        <td>int</td>
+        <td>反馈拥有评论条数</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+{% endblock %}

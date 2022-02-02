@@ -1,0 +1,47 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>发送志愿活动pdf</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>Sid</td>
+        <td>String</td>
+        <td>需要发送的学生的学号</td>
+    </tr>
+    <tr>
+        <td>Mail</td>
+        <td>String</td>
+        <td>需要发往的邮箱</td>
+    </tr>
+    <tr>
+        <td>Fid</td>
+        <td>list(int)</td>
+        <td>需要发送的文件，填0表示全部发送，用逗号分隔不同fid</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>邮件发送失败</td>
+    </tr>
+{% endblock %}
