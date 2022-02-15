@@ -219,7 +219,7 @@ def get_course(request):
             getter = CQUGetter(sid=paras['Sid'], use_selenium=False)
             if getter.is_match(paras['UserName'], paras['Password']):
                 course_log = getter.get_courses()
-                if course_log is not None:
+                if course_log is not None and len(course_log):
                     return_value['Courses'] = course_log
                 else:
                     paras['Statue'] = 0
@@ -256,7 +256,7 @@ def get_enrollment(request):
             getter = CQUGetter(sid=paras['Sid'], use_selenium=False)
             if getter.is_match(paras['UserName'], paras['Password']):
                 course_log = getter.get_enrollment()
-                if course_log is not None:
+                if course_log is not None and len(course_log):
                     return_value['Courses'] = course_log
                 else:
                     paras['Statue'] = 0

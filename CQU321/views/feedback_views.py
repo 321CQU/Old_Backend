@@ -27,7 +27,9 @@ def send_feedback(request):
                 return_value['Statue'] = 1
             except:
                 connection.rollback()
-                return_value['Statue'] = 0
+                paras['Statue'] = 0
+                paras['ErrorCode'] = 2
+                paras['ErrorInfo'] = 'sql execute error'
         return_value['Statue'] = paras['Statue']
         if return_value['Statue'] == 0:
             return_value['ErrorCode'] = paras['ErrorCode']

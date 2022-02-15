@@ -10,6 +10,8 @@ urlpatterns = [
     # 学校相关信息查询
     path('school_info/get_curr_term', school_info_views.get_curr_term, name='get_curr_term'),
     path('school_info/get_next_term', school_info_views.get_next_term, name='get_next_term'),
+    path('school_info/get_course_list', school_info_views.get_course_list, name='get_course_list'),
+    path('school_info/get_course_detail', school_info_views.get_course_detail, name='get_course_detail'),
 
     # 321CQU about界面（未来可能用于各种协议的更新等）
     path('about/about_us', about_views.about_us, name='about_us'),

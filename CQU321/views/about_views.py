@@ -20,8 +20,9 @@ def about_us(request):
                                         '众所周知，将大象放进冰箱需要三步，在未来我们会依据自身课业情况，陆续添加更多的数据、支持更多的功能，我们的愿景是：重大师生不在需要在多个页面间寻找信息，像默数“321”一样迅速便捷的获取想要知道的信息',
                                         '开发人员：朱子骏，陈佳明',
                                        '图标设计：毛顺强',
-                                       '特别鸣谢：Hagb 提供开源库：https://github.com/Hagb/pymycqu',
-                                       '小程序会在不久后与GitHub上完全开源，敬请期待']
+                                       '特别鸣谢：Hagb 提供开源库pymycqu：https://github.com/Hagb/pymycqu',
+                                       '小程序已在GitHub上开源，小程序后端地址：https://github.com/ZhuLegend/321CQUWebsite',
+                                       '教务网信息获取接口封装：https://github.com/ZhuLegend/CQUgetter']
         return_value['Statue'] = paras['Statue']
         if return_value['Statue'] == 0:
             return_value['ErrorCode'] = paras['ErrorCode']

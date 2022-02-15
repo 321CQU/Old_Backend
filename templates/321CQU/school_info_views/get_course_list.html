@@ -1,0 +1,62 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>根据课程或教师姓名查询相关课程（支持模糊匹配）</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>TeacherName/CourseName</td>
+        <td>String</td>
+        <td>两个参数同时只能填写一个，分别返回对应的信息</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>Cid(Courses 当填写CourseName时)</td>
+        <td>String</td>
+        <td>课程编号</td>
+    </tr>
+    <tr>
+        <td>Cname(Courses 当填写CourseName时)</td>
+        <td>String</td>
+        <td>课程名称</td>
+    </tr>
+    <tr>
+        <td>Tname(Courses 当传递TeacherName时)</td>
+        <td>String</td>
+        <td>教师名称</td>
+    </tr>
+    <tr>
+        <td>Cid(Courses 当填写TeacherName时)</td>
+        <td>String</td>
+        <td>教师所教授课程编号</td>
+    </tr>
+    <tr>
+        <td>Cname(Courses 当填写TeacherName时)</td>
+        <td>String</td>
+        <td>教师所教授课程名称</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>账号密码错误</td>
+    </tr>
+{% endblock %}

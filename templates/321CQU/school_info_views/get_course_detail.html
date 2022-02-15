@@ -1,0 +1,83 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>根据课程编号查询课程每学期、所有老师的成绩分布</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>Cid</td>
+        <td>String</td>
+        <td>课程编号</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>Term(Course)</td>
+        <td>String</td>
+        <td>学期</td>
+    </tr>
+    <tr>
+        <td>Tname(Course.Term)</td>
+        <td>String</td>
+        <td>教师姓名</td>
+    </tr>
+    <tr>
+        <td>Cname(Course.Term)</td>
+        <td>String</td>
+        <td>课程名称</td>
+    </tr>
+    <tr>
+        <td>Average(Course.Term)</td>
+        <td>float</td>
+        <td>课程平均成绩</td>
+    </tr>
+    <tr>
+        <td>Num(Course.Term)</td>
+        <td>int</td>
+        <td>已知成绩人数</td>
+    </tr>
+    <tr>
+        <td>Max(Course.Term)</td>
+        <td>String</td>
+        <td>最优成绩</td>
+    </tr>
+    <tr>
+        <td>Min(Course.Term)</td>
+        <td>String</td>
+        <td>最差成绩</td>
+    </tr>
+    <tr>
+        <td>CountNum(Course.Term)</td>
+        <td>int</td>
+        <td>连续5个数字，分别表示90-100、80-90、70-80、60-70、0-60分段人数（均为左闭右开区间）</td>
+    </tr>
+    <tr>
+        <td>IsHierarchy(IsHierarchy.Term)</td>
+        <td>int</td>
+        <td>判断是否为等级制，为等级制（五级或两级）返回1，不为等级制返回0</td>
+    </tr>
+
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>无该课程详细数据</td>
+    </tr>
+{% endblock %}
