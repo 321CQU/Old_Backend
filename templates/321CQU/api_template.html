@@ -1,0 +1,58 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    {{ sections.title }}
+{% endblock %}
+{% block version_tag %}
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    接口版本
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for version in versions %}
+        <li><a class="dropdown-item" href={{ version.link }}>{{ version.name }}</a></li>
+      {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>str</td>
+        <td>接口申请合法性校验密钥</td>
+    </tr>
+    <tr>
+        <td>Version</td>
+        <td>str</td>
+        <td>调用接口版本（如'1.0'等）</td>
+    </tr>
+    {% for param in input_params  %}
+        <tr>
+            <td>{{ param.name }}</td>
+            <td>{{ param.cls }}</td>
+            <td>{{ param.info }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    {% for param in return_params  %}
+        <tr>
+            <td>{{ param.name }}</td>
+            <td>{{ param.cls }}</td>
+            <td>{{ param.info }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+{% block error_info %}
+    {% for error in error_info %}
+        <tr>
+            <td>{{ error.error_code }}</td>
+            <td>{{ error.error_info }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+

@@ -1,0 +1,46 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>删除回复</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>Rid</td>
+        <td>String</td>
+        <td>回复id</td>
+    </tr>
+    <tr>
+        <td>Sid</td>
+        <td>String</td>
+        <td>修改人的学号（仅有超级管理员、分区管理员、帖子作者、回复作者可以删除回复）</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>sql 语句执行错误</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>该用户没有权限执行此操作</td>
+    </tr>
+{% endblock %}

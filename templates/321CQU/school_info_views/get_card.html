@@ -1,0 +1,68 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>获取校园卡余额和账单</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>UserName</td>
+        <td>String</td>
+        <td>账号</td>
+    </tr>
+    <tr>
+        <td>Password</td>
+        <td>String</td>
+        <td>密码</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>Amount</td>
+        <td>Float</td>
+        <td>校园卡余额</td>
+    </tr>
+    <tr>
+        <td>Bills(List)</td>
+        <td>List</td>
+        <td>账单</td>
+    </tr>
+    <tr>
+        <td>Money(Bills)</td>
+        <td>Float</td>
+        <td>消费金额</td>
+    </tr>
+    <tr>
+        <td>Location(Bills)</td>
+        <td>String</td>
+        <td>消费地点</td>
+    </tr>
+    <tr>
+        <td>Time(Bills)</td>
+        <td>String</td>
+        <td>消费时间</td>
+    </tr>
+    <tr>
+        <td>Type(Bills)</td>
+        <td>String</td>
+        <td>类型</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+{% endblock %}

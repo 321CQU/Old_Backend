@@ -1,0 +1,47 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>发送回复</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>Content</td>
+        <td>String(1000)</td>
+        <td>帖子正文，不超过1000个字符</td>
+    </tr>
+    <tr>
+        <td>Author</td>
+        <td>String</td>
+        <td>发帖人的学号</td>
+    </tr>
+    <tr>
+        <td>Pid</td>
+        <td>Int</td>
+        <td>回复的帖子</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>sql 语句执行错误</td>
+    </tr>
+{% endblock %}

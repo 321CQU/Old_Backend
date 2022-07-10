@@ -1,17 +1,22 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-
-from ..tools import analysis_json, connect_db
-from mycqu.auth import login
-from mycqu.mycqu import access_mycqu
-from mycqu.course import CQUSessionInfo, CQUSession
-
 import json
+import pickle
+
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from mycqu.auth import login
+from mycqu.course import CQUSessionInfo
+from mycqu.mycqu import access_mycqu
 from requests import Session
 
+from Website.settings import BASE_DIR
+from ..CQUGetter_old import CQUGetter
+from ..get_vacant_room import get_vacant_room_tool, building_Dict
+from ..tools import analysis_json, connect_db
+from ..utils.tools import launch_template_data, post_json_analyses, launch_return_data
+from CQU321.interface_processing.school_info_interface import *
 
-# 获取当前学期
+
 @csrf_exempt
 def get_curr_term(request):
     if request.method == 'POST' and request.body:
@@ -43,7 +48,6 @@ def get_curr_term(request):
         return render(request, '321CQU/school_info_views/get_curr_term.html')
 
 
-# 获取下一个学期
 @csrf_exempt
 def get_next_term(request):
     if request.method == 'POST' and request.body:
@@ -63,7 +67,6 @@ def get_next_term(request):
             else:
                 curr_term = CQUSessionInfo.fetch(session)
                 next_term_id = curr_term.session.get_id() + 1
-                # 新旧学期交替之际，存在短暂的该接口无法获取到新学期信息的问题，因此让返回值直接返回空
                 try:
                     res = session.get(f'https://my.cqu.edu.cn/api/resourceapi/session/info/{next_term_id}')
                     data = json.loads(res.content)['data']
@@ -139,7 +142,6 @@ def get_course_detail(request):
             temp = {}
             if len(terms):
                 for term in terms:
-                    # 该sql会判断该课程是否为等级制（成绩当中有中文且超过了总成绩数量的一半即为等级制），并分别返回相关信息，分数制有11列，等级制为8列
                     sql2 = "call CourseDetail(%s, %s)"
                     cursor.execute(sql2, (paras['Cid'], term[0]))
                     infos = cursor.fetchall()
@@ -147,10 +149,13 @@ def get_course_detail(request):
 
                 temp_dict = {}
                 for term in terms:
-                    if len(temp[term[0]][0]) == 11:
-                        temp_dict[term[0]] = 0
-                    else:
-                        temp_dict[term[0]] = 1
+                    try:
+                        if len(temp[term[0]][0]) == 11:
+                            temp_dict[term[0]] = 0
+                        else:
+                            temp_dict[term[0]] = 1
+                    except:
+                        pass
 
                 return_value['IsHierarchy'] = temp_dict
 
@@ -168,3 +173,107 @@ def get_course_detail(request):
         return HttpResponse(return_json, content_type='application/json')
     elif request.method == 'GET':
         return render(request, '321CQU/school_info_views/get_course_detail.html')
+
+
+# 根据宿舍号查询宿舍水电费情况
+@csrf_exempt
+def get_fees(request):
+    if request.method == 'POST' and request.body:
+        params = post_json_analyses(request.body.decode('utf-8'), get_fees_process.__name__)
+        data = get_fees_process(params)
+        result = launch_return_data(data, get_fees_process.__name__)
+        return JsonResponse(result)
+    elif request.method == 'GET':
+        version = request.GET.get('version')
+        sections = launch_template_data('获取宿舍水电费信息', get_fees_process.__name__, version)
+        return render(request, '321CQU/api_template.html', context=sections)
+
+
+# 查询校园卡余额，交易情况
+@csrf_exempt
+def get_card(request):
+    if request.method == 'POST' and request.body:
+        post_json = request.body.decode('utf-8')
+        post = json.loads(post_json)
+        paras = analysis_json(post, ['Key', 'UserName', 'Password'])
+        return_value = {}
+        if paras['Statue'] == 1:
+            getter = CQUGetter(use_selenium=False)
+            if getter.is_match(paras['UserName'], paras['Password']):
+                return_value = getter.get_card()
+        return_value['Statue'] = paras['Statue']
+        if return_value['Statue'] == 0:
+            return_value['ErrorCode'] = paras['ErrorCode']
+            return_value['ErrorInfo'] = paras['ErrorInfo']
+        return_json = json.dumps(return_value)
+        return HttpResponse(return_json, content_type='application/json')
+    elif request.method == 'GET':
+        return render(request, '321CQU/school_info_views/get_card.html')
+
+
+# 虎溪校区空教室查询
+@csrf_exempt
+def get_vacant_room(request):
+    if request.method == 'POST' and request.body:
+        post_json = request.body.decode('utf-8')
+        post = json.loads(post_json)
+        paras = analysis_json(post, ['Key', 'UserName', 'Password', 'AppointWeek', 'AppointWeekday'], ['AppointCourse'])
+        return_value = {}
+        if paras['Statue'] == 1:
+            getter = CQUGetter(use_selenium=False)
+            if getter.is_match(paras['UserName'], paras['Password']):
+                with open('./room_timetable', 'rb') as f:
+                    room_timetable = pickle.load(f)
+                if paras['AppointCourse'] is None:
+                    temp = {}
+                    for course in range(1, 14):
+                        paras['AppointCourse'] = str(course)
+                        temp[course] = get_vacant_room_tool(room_timetable, paras['AppointWeek'],
+                                                                    paras['AppointWeekday'], paras['AppointCourse'])
+
+                    return_value['VacantRoomList'] = temp
+                else:
+                    return_value['VacantRoomList'] = get_vacant_room_tool(
+                        room_timetable, paras['AppointWeek'], paras['AppointWeekday'], paras['AppointCourse'])
+        return_value['Statue'] = paras['Statue']
+        if return_value['Statue'] == 0:
+            return_value['ErrorCode'] = paras['ErrorCode']
+            return_value['ErrorInfo'] = paras['ErrorInfo']
+        return_json = json.dumps(return_value)
+        return HttpResponse(return_json, content_type='application/json')
+    elif request.method == 'GET':
+        return render(request, '321CQU/school_info_views/get_vacant_room.html')
+
+# 老校区空教室查询
+@csrf_exempt
+def get_vacant_room_old_campus(request):
+    if request.method == 'POST' and request.body:
+        post_json = request.body.decode('utf-8')
+        post = json.loads(post_json)
+        paras = analysis_json(post, ['Key', 'UserName', 'Password', 'AppointWeek', 'AppointWeekday', 'AppointBuilding'], ['AppointCourse'])
+        return_value = {}
+        if paras['Statue'] == 1:
+            getter = CQUGetter(use_selenium=False)
+            building = paras['AppointBuilding']
+            if getter.is_match(paras['UserName'], paras['Password']):
+                with open(str(BASE_DIR) + '/CQU321/' + building_Dict[building], 'rb') as f:
+                    room_timetable = pickle.load(f)
+                if paras['AppointCourse'] is None:
+                    temp = {}
+                    for course in range(1, 14):
+                        paras['AppointCourse'] = str(course)
+                        temp[course] = get_vacant_room_tool(room_timetable, paras['AppointWeek'],
+                                                                    paras['AppointWeekday'], paras['AppointCourse'])
+
+                    return_value['VacantRoomList'] = temp
+                else:
+                    return_value['VacantRoomList'] = get_vacant_room_tool(
+                        room_timetable, paras['AppointWeek'], paras['AppointWeekday'], paras['AppointCourse'])
+        return_value['Statue'] = paras['Statue']
+        if return_value['Statue'] == 0:
+            return_value['ErrorCode'] = paras['ErrorCode']
+            return_value['ErrorInfo'] = paras['ErrorInfo']
+        return_json = json.dumps(return_value)
+        return HttpResponse(return_json, content_type='application/json')
+    elif request.method == 'GET':
+        return render(request, '321CQU/school_info_views/get_vacant_room_old_campus.html')

@@ -1,17 +1,15 @@
-# 需要在多处复用的函数
-
 import pymysql
 import requests
 import json
 import time
 import fcntl
 from configparser import ConfigParser
+from Website.settings import BASE_DIR
 
 config = ConfigParser()
-config.read('./CQU321/321CQU_Config.ini')
+config.read(str(BASE_DIR) + '/CQU321/321CQU_Config.ini')
 
 
-# 根据配置文件链接数据库
 def connect_db():
     connection = pymysql.connect(
         host=config.get('321CQU_Database', 'host'),
@@ -24,7 +22,6 @@ def connect_db():
     return connection, cursor
 
 
-# 分析所获取的post命令
 def analysis_json(post, args, opt_paras=None):
     temp = {}
     try:
@@ -50,7 +47,6 @@ def analysis_json(post, args, opt_paras=None):
     return temp
 
 
-# 用于定时更新发送微信小程序通知的token
 def update_token(file_path=config.get('Website', 'WX_json_save_path')):
     try:
         with open(file_path + 'WX.json', 'r') as f:
@@ -76,7 +72,6 @@ def update_token(file_path=config.get('Website', 'WX_json_save_path')):
             fcntl.flock(f, fcntl.LOCK_UN)
 
 
-# 用于向微信小程序用户推送通知
 def send_message(template_id, open_id, data, file_path=config.get('Website', 'WX_json_save_path')):
     if template_id == 0:
         template = config.get('Weixin_App_Setting', 'score_template')
@@ -105,13 +100,11 @@ def send_message(template_id, open_id, data, file_path=config.get('Website', 'WX
             connection.commit()
 
 
-# 生成微信小程序通知所需的成绩格式
 def launch_score_data(name, score):
     data = {'thing1': {'value': name}, 'thing2': {'value': score}}
     return data
 
 
-# 获取小程序用户唯一的Openid
 def get_code(code):
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid={}&secret={}&js_code={}&grant_type=authorization_code'
     res = requests.get(url.format(config.get('Weixin_App_Setting', 'appid'),
@@ -125,3 +118,33 @@ def get_code(code):
         open_id = None
     return open_id
 
+
+def has_authority(sid, id, type):
+    connection, cursor = connect_db()
+    sql1 = "select Authority from UserInfo where Sid = %s"
+    cursor.execute(sql1, (sid,))
+    user_authority = cursor.fetchone()[0]
+    if type == "delete reply":
+        sql2 = "select R.Author, P.Type, P.Author from Reply R join Posts P on P.Pid = R.Pid where R.Author = %s"
+    else:
+        sql2 = "select Type, Author from Posts where Pid = %s"
+
+    cursor.execute(sql2, (id,))
+    post_info = cursor.fetchone()
+
+
+    if type == 'delete reply':
+        if user_authority == 'super' or user_authority == post_info[1] or sid == post_info[0] or sid == post_info[2]:
+            return True
+        else:
+            return False
+    else:
+        if user_authority == "super" or user_authority == post_info[0] or sid == post_info[1]:
+            return True
+        else:
+            return False
+
+
+if __name__ == '__main__':
+    code = '003YRoll2MBvr84myFkl2GvRjI0YRolF'
+    print(get_code(code))

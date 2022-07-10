@@ -1,0 +1,76 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>设置用户信息</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+     <tr>
+        <td>Code</td>
+        <td>String</td>
+        <td>小程序用户临时标识码</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>Auth</td>
+        <td>String</td>
+        <td>统一身份认证号</td>
+    </tr>
+    <tr>
+        <td>Password</td>
+        <td>String</td>
+        <td>密码</td>
+    </tr>
+     <tr>
+        <td>Sid</td>
+        <td>String</td>
+        <td>学号</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>String</td>
+        <td>邮箱</td>
+    </tr>
+    <tr>
+        <td>Dormitory</td>
+        <td>String</td>
+        <td>宿舍</td>
+    </tr>
+    <tr>
+        <td>Type</td>
+        <td>String</td>
+        <td>用户类型（本科生、研究生）</td>
+    </tr>
+    <tr>
+        <td>Authority</td>
+        <td>String</td>
+        <td>权限</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>sql语句执行错误</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>没有该用户的信息</td>
+    </tr>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>修改或删除帖子</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>Title</td>
+        <td>String</td>
+        <td>帖子标题</td>
+    </tr>
+    <tr>
+        <td>Content</td>
+        <td>String(1000)</td>
+        <td>帖子正文，不超过1000个字符</td>
+    </tr>
+    <tr>
+        <td>IsDelete</td>
+        <td>Bool</td>
+        <td>是否需要删除</td>
+    </tr>
+    <tr>
+        <td>Pid</td>
+        <td>Int</td>
+        <td>帖子id</td>
+    </tr>
+    <tr>
+        <td>Sid</td>
+        <td>String</td>
+        <td>修改人的学号（仅有超级管理员、分区管理员、帖子作者可以修改帖子）</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>sql 语句执行错误</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>该用户没有权限执行此操作</td>
+    </tr>
+{% endblock %}

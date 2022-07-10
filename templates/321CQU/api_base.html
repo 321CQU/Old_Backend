@@ -1,33 +1,41 @@
 {% extends 'base.html' %}
 {% block body %}
-    <table border="2" align="center">
+    {% block version_tag %}
+    {% endblock %}
+    <table class="table table-bordered table-hover caption-top">
         <caption>参数</caption>
-        <tr>
-            <th>参数名</th>
-            <th>属性</th>
-            <th>含义</th>
-        </tr>
+        <thead class="table-dark">
+            <tr>
+                <th>参数名</th>
+                <th>属性</th>
+                <th>含义</th>
+            </tr>
+        </thead>
         {% block input_paras %}
         {% endblock %}
     </table>
-    <hr style="FILTER:alpha(opacity=100,finish-opacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
-    <table border="2" align="center">
+    <hr style="FILTER:alpha(opacity=100,finish-opacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <table class="table table-bordered table-hover caption-top">
         <caption>返回值</caption>
-        <tr>
-            <th>返回值</th>
-            <th>属性</th>
-            <th>含义</th>
-        </tr>
+        <thead class="table-dark">
+            <tr>
+                <th>返回值</th>
+                <th>属性</th>
+                <th>含义</th>
+            </tr>
+        </thead>
         {% block return_paras %}
         {% endblock %}
     </table>
-    <hr style="FILTER:alpha(opacity=100,finish-opacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
-    <table border="2" align="center">
+    <hr style="FILTER:alpha(opacity=100,finish-opacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <table class="table table-bordered table-hover caption-top">
         <caption>错误码(Statue 为0时，返回内容中增加ErrorCode和ErrorInfo)</caption>
-        <tr>
-            <th>错误码</th>
-            <th>含义</th>
-        </tr>
+        <thead class="table-dark">
+            <tr>
+                <th>错误码</th>
+                <th>含义</th>
+            </tr>
+        </thead>
         {% block error_info %}
         {% endblock %}
     </table>

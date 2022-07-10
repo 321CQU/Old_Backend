@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from ..tools import analysis_json, get_code, connect_db
-from ..CQUGetter import CQUGetter
+from ..CQUGetter_old import CQUGetter
 
 import json
 import hashlib
@@ -18,7 +18,7 @@ def message_validation(request):
         timestamp = request.GET.get('timestamp')
         nonce = request.GET.get('nonce')
         echostr = request.GET.get('echostr')
-        token = '*******'  # 这里填在微信小程序端设置的token
+        token = 'CQUz5321'  # 这里填在微信小程序端设置的token
 
         temp_arr = [timestamp, nonce, token]
         temp_arr.sort()
@@ -57,7 +57,6 @@ def message_validation(request):
             print(e)
 
 
-# 因为微信提供的订阅消息推送很奇怪，而且我们小程序的订阅功能需要获取用户账号密码，这里就给了一个单独的接口
 @csrf_exempt
 def subscribe_message(request):
     if request.method == 'POST':

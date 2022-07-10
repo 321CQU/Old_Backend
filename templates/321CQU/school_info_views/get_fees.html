@@ -1,0 +1,81 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>根据房间号获取宿舍水电费信息</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>UserName</td>
+        <td>String</td>
+        <td>账号</td>
+    </tr>
+    <tr>
+        <td>Password</td>
+        <td>String</td>
+        <td>密码</td>
+    </tr>
+    <tr>
+        <td>IsHuXi</td>
+        <td>Bool</td>
+        <td>该宿舍是否为虎溪校区的宿舍</td>
+    </tr>
+    <tr>
+        <td>Room</td>
+        <td>String</td>
+        <td>房间号（如B5321）</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>FeesInfo(dict)</td>
+        <td>String</td>
+        <td>水电费相关</td>
+    </tr>
+    <tr>
+        <td>Amount(FeesInfo)</td>
+        <td>String</td>
+        <td>余额</td>
+    </tr>
+    <tr>
+        <td>Eamount(FeesInfo)</td>
+        <td>String</td>
+        <td>电费补贴余额（仅当为虎溪校区时返回）</td>
+    </tr>
+    <tr>
+        <td>Wamount(FeesInfo)</td>
+        <td>String</td>
+        <td>水费补贴余额（仅当为虎溪校区时返回）</td>
+    </tr>
+    <tr>
+        <td>Subsidies(FeesInfo)</td>
+        <td>String</td>
+        <td>补贴余额（仅当为老校区时返回）</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>费用获取错误</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>账号密码错误</td>
+    </tr>
+{% endblock %}

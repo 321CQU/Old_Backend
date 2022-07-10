@@ -3,11 +3,28 @@
     <title>321CQU api接口</title>
 {% endblock %}
 {% block body %}
-    <table border="2" align="center">
-        <tr>
-            <th>链接</th>
-            <th>功能</th>
-        </tr>
+    <div id="url-list" class="list-group position-fixed top-50 start-0 translate-middle-y ms-3">
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#school_info">学校相关信息</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#student">学生相关信息</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#user">用户相关信息</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#feedback">反馈相关</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#pg-student">研究生相关信息</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#library">图书馆界面相关</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#forum">信息广场相关功能</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#announcement">活动公告功能</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#cos">对象存储相关</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="#others">其他接口</a>
+    </div>
+
+    <div data-bs-spy="scroll" data-bs-target="#api-list" data-bs-offest="0" tabindex="0">
+     <table class="table table-bordered table-hover caption-top" id="school_info">
+        <caption>学校相关信息</caption>
+         <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+         </thead>
         <tr>
             <td><a href="{%  url '321CQU:get_curr_term' %}">{%  url '321CQU:get_curr_term' %}</a> </td>
             <td>查询当前学期相关信息</td>
@@ -17,6 +34,14 @@
             <td>查询下学期相关信息</td>
         </tr>
         <tr>
+            <td><a href="{%  url '321CQU:get_fees' %}">{%  url '321CQU:get_fees' %}</a> </td>
+            <td>查询宿舍水电费信息</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_card' %}">{%  url '321CQU:get_card' %}</a> </td>
+            <td>查询校园卡余额及账单</td>
+        </tr>
+        <tr>
             <td><a href="{%  url '321CQU:get_course_list' %}">{%  url '321CQU:get_course_list' %}</a> </td>
             <td>根据教师姓名、课程名称查询相关课程（均支持模糊查询）</td>
         </tr>
@@ -24,6 +49,24 @@
             <td><a href="{%  url '321CQU:get_course_detail' %}">{%  url '321CQU:get_course_detail' %}</a> </td>
             <td>课程编号查询课程每学期、所有老师成绩分布数据</td>
         </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_vacant_room' %}">{%  url '321CQU:get_vacant_room' %}</a> </td>
+            <td>查询空教室</td>
+        </tr>
+         <tr>
+            <td><a href="{%  url '321CQU:get_vacant_room_old_campus' %}">{%  url '321CQU:get_vacant_room_old_campus' %}</a> </td>
+            <td>查询老校区空教室</td>
+        </tr>
+     </table>
+
+    <table class="table table-bordered table-hover caption-top" id="student">
+        <caption>学生相关信息</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
         <tr>
             <td><a href="{%  url '321CQU:stuVal' %}">{%  url '321CQU:stuVal' %}</a> </td>
             <td>通过学号，查询学生姓名</td>
@@ -37,9 +80,35 @@
             <td>查询学生的所有志愿活动相关信息</td>
         </tr>
         <tr>
-            <td><a href="{%  url '321CQU:send_volunteer_pdfs' %}">{%  url '321CQU:send_volunteer_pdfs' %}</a> </td>
-            <td>向用户发送其选择的志愿活动相关文件</td>
+            <td><a href="{%  url '321CQU:get_exam' %}">{%  url '321CQU:get_exam' %}</a> </td>
+            <td>查询考试安排</td>
         </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_course' %}">{%  url '321CQU:get_course' %}</a> </td>
+            <td>课表查询</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_score' %}">{%  url '321CQU:get_score' %}</a> </td>
+            <td>成绩查询</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_gpa_ranking' %}">{%  url '321CQU:get_gpa_ranking' %}</a> </td>
+            <td>绩点排名查询</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_enrollment' %}">{%  url '321CQU:get_enrollment' %}</a> </td>
+            <td>下学期已选课表查询</td>
+        </tr>
+     </table>
+
+    <table class="table table-bordered table-hover caption-top" id="user">
+        <caption>用户相关信息</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
         <tr>
             <td><a href="{%  url '321CQU:set_user_info' %}">{%  url '321CQU:set_user_info' %}</a> </td>
             <td>设置用户昵称、头像</td>
@@ -52,6 +121,33 @@
             <td><a href="{%  url '321CQU:get_advertise_times' %}">{%  url '321CQU:get_advertise_times' %}</a> </td>
             <td>返回用户观看广告次数</td>
         </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:bind_auth' %}">{%  url '321CQU:bind_auth' %}</a> </td>
+            <td>统一身份认证校验</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:update_user_info' %}">{%  url '321CQU:update_user_info' %}</a> </td>
+            <td>上传用户相关信息</td>
+        </tr>
+         <tr>
+            <td><a href="{%  url '321CQU:select_user_info' %}">{%  url '321CQU:select_user_info' %}</a> </td>
+            <td>查询用户相关信息</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:delete_user_info' %}">{%  url '321CQU:delete_user_info' %}</a> </td>
+            <td>删除用户相关信息</td>
+        </tr>
+
+     </table>
+
+    <table class="table table-bordered table-hover caption-top" id="feedback">
+        <caption>反馈相关</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
         <tr>
             <td><a href="{%  url '321CQU:send_feedback' %}">{%  url '321CQU:send_feedback' %}</a> </td>
             <td>发送小程序反馈</td>
@@ -68,10 +164,16 @@
             <td><a href="{%  url '321CQU:get_comment' %}">{%  url 'test_api:get_comment' %}</a> </td>
             <td>获取反馈评论</td>
         </tr>
-        <tr>
-            <td><a href="{%  url '321CQU:is_match' %}">{%  url '321CQU:is_match' %}</a> </td>
-            <td>统一身份认证校验</td>
-        </tr>
+     </table>
+
+    <table class="table table-bordered table-hover caption-top" id="pg-student">
+        <caption>研究生相关信息</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
         <tr>
             <td><a href="{%  url '321CQU:pg_is_match' %}">{%  url '321CQU:pg_is_match' %}</a> </td>
             <td>研究生账号校验</td>
@@ -80,21 +182,149 @@
             <td><a href="{%  url '321CQU:pg_get_score' %}">{%  url '321CQU:pg_get_score' %}</a> </td>
             <td>查询研究生成绩</td>
         </tr>
+     </table>
+
+    <table class="table table-bordered table-hover caption-top" id="course-table">
+        <caption>课表界面相关</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
         <tr>
-            <td><a href="{%  url '321CQU:get_exam' %}">{%  url '321CQU:get_exam' %}</a> </td>
-            <td>查询考试安排</td>
+            <td><a href="{%  url '321CQU:push_custom_event' %}">{%  url '321CQU:push_custom_event' %}</a> </td>
+            <td>备份自定义事件</td>
         </tr>
         <tr>
-            <td><a href="{%  url '321CQU:get_course' %}">{%  url '321CQU:get_course' %}</a> </td>
-            <td>课表查询</td>
+            <td><a href="{%  url '321CQU:pull_custom_event' %}">{%  url '321CQU:pull_custom_event' %}</a> </td>
+            <td>同步自定义事件</td>
+        </tr>
+     </table>
+
+    <table class="table table-bordered table-hover caption-top" id="library">
+        <caption>图书馆界面相关</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
+        <tr>
+            <td><a href="{%  url '321CQU:get_borrow_list' %}">{%  url '321CQU:get_borrow_list' %}</a> </td>
+            <td>获取当前/历史借阅书籍信息</td>
         </tr>
         <tr>
-            <td><a href="{%  url '321CQU:get_score' %}">{%  url '321CQU:get_score' %}</a> </td>
-            <td>成绩查询</td>
+            <td><a href="{%  url '321CQU:renew_book' %}">{%  url '321CQU:renew_book' %}</a> </td>
+            <td>续借书籍</td>
         </tr>
         <tr>
-            <td><a href="{%  url '321CQU:get_enrollment' %}">{%  url '321CQU:get_enrollment' %}</a> </td>
-            <td>下学期已选课表查询</td>
+            <td><a href="{%  url '321CQU:search_book' %}">{%  url '321CQU:search_book' %}</a> </td>
+            <td>根据关键词查询书籍</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_book_pos' %}">{%  url '321CQU:get_book_pos' %}</a> </td>
+            <td>根据书籍id查询书籍借阅信息</td>
+        </tr>
+     </table>
+
+    <table class="table table-bordered table-hover caption-top" id="forum">
+        <caption>信息广场相关功能</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
+        <tr>
+            <td><a href="{%  url '321CQU:send_post' %}">{%  url '321CQU:send_post' %}</a> </td>
+            <td>发帖接口</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:update_post' %}">{%  url '321CQU:update_post' %}</a> </td>
+            <td>修改或删除帖子的接口</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_post_list' %}">{%  url '321CQU:get_post_list' %}</a> </td>
+            <td>回传帖子总览</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_post_detail' %}">{%  url '321CQU:get_post_detail' %}</a> </td>
+            <td>回传帖子详情</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:send_reply' %}">{%  url '321CQU:send_reply' %}</a> </td>
+            <td>发送回复</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_reply' %}">{%  url '321CQU:get_reply' %}</a> </td>
+            <td>修改回复</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:delete_reply' %}">{%  url '321CQU:delete_reply' %}</a> </td>
+            <td>删除回复</td>
+        </tr>
+     </table>
+
+    <table class="table table-bordered table-hover caption-top" id="announcement">
+        <caption>活动公告相关</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
+        <tr>
+            <td><a href="{%  url '321CQU:get_group_info' %}">{%  url '321CQU:get_group_info' %}</a> </td>
+            <td>获取组织信息</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_announcement_list' %}">{%  url '321CQU:get_announcement_list' %}</a> </td>
+            <td>获取公告列表</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:get_announcement_detail' %}">{%  url '321CQU:get_announcement_detail' %}</a> </td>
+            <td>获取公告正文</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:subscribe_group' %}">{%  url '321CQU:subscribe_group' %}</a> </td>
+            <td>关注/取关组织</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:subscribe_list' %}">{%  url '321CQU:subscribe_list' %}</a> </td>
+            <td>获取关注组织列表</td>
+        </tr>
+    </table>
+
+    <table class="table table-bordered table-hover caption-top" id="cos">
+        <caption>COS对象存储</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
+        <tr>
+            <td><a href="{%  url '321CQU:get_cos_credential' %}">{%  url '321CQU:get_cos_credential' %}</a></td>
+            <td>获取临时密钥</td>
+        </tr>
+    </table>
+
+    <table class="table table-bordered table-hover caption-top" id="others">
+        <caption>其他接口</caption>
+        <thead class="table-dark">
+            <tr>
+                <th>链接</th>
+                <th>功能</th>
+            </tr>
+        </thead>
+        <tr>
+            <td><a href="{%  url '321CQU:homepage' %}">{%  url '321CQU:homepage' %}</a> </td>
+            <td>最新首页图片</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:send_volunteer_pdfs' %}">{%  url '321CQU:send_volunteer_pdfs' %}</a> </td>
+            <td>向用户发送其选择的志愿活动相关文件</td>
         </tr>
         <tr>
             <td><a href="{%  url '321CQU:subscribe' %}">{%  url '321CQU:subscribe' %}</a> </td>
@@ -105,11 +335,20 @@
             <td>回传"关于我们"界面相关信息</td>
         </tr>
         <tr>
+            <td><a href="{%  url '321CQU:get_tutorials' %}">{%  url '321CQU:get_tutorials' %}</a> </td>
+            <td>回传"使用教程"界面相关信息</td>
+        </tr>
+        <tr>
+            <td><a href="{%  url '321CQU:homepage' %}">{%  url '321CQU:homepage' %}</a> </td>
+            <td>回传首页图片相关信息</td>
+        </tr>
+        <tr>
             <td><a href="{%  url '321CQU:test_data' %}">{%  url '321CQU:test_data' %}</a> </td>
             <td>用于回传任意测试数据的接口</td>
         </tr>
     </table>
-    <hr style="FILTER:alpha(opacity=100,finish-opacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+    </div>
+    <hr style="FILTER:alpha(opacity=100,finish-opacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
     <p style="text-align: center">注意：参数名后跟括号表示多个参数按顺序，作为列表，以括号中的名称返回</p>
     <p style="text-align: center">注意：最新api请向'321CQU/test_api 发送请求'</p>
 {% endblock %}

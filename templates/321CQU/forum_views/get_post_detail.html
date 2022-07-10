@@ -1,0 +1,86 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>获取帖子详细信息</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>Pid</td>
+        <td>String</td>
+        <td>帖子序号</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>PostDetail(Dict)</td>
+        <td>Dict</td>
+        <td>帖子简介列表</td>
+    </tr>
+    <tr>
+        <td>Pid(PostDetail)</td>
+        <td>Int</td>
+        <td>帖子序号</td>
+    </tr>
+    <tr>
+        <td>Title(PostDetail)</td>
+        <td>String</td>
+        <td>帖子标题</td>
+    </tr>
+    <tr>
+        <td>Content(PostDetail)</td>
+        <td>String</td>
+        <td>帖子内容</td>
+    </tr>
+    <tr>
+        <td>Author(PostDetail)</td>
+        <td>String</td>
+        <td>帖子作者</td>
+    </tr>
+    <tr>
+        <td>Type(PostDetail)</td>
+        <td>String</td>
+        <td>帖子类型</td>
+    </tr>
+    <tr>
+        <td>UserName(PostDetail)</td>
+        <td>String</td>
+        <td>作者昵称</td>
+    </tr>
+    <tr>
+        <td>UserImg(PostDetail)</td>
+        <td>String</td>
+        <td>作者头像</td>
+    </tr>
+    <tr>
+        <td>UpdateDate(PostDetail)</td>
+        <td>String</td>
+        <td>帖子发布时间</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>sql 语句执行错误</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>查询的帖子不存在</td>
+    </tr>
+{% endblock %}

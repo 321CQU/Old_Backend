@@ -1,10 +1,12 @@
-import mycqu.score
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from ..CQUGetter import CQUGetter
-from ..tools import analysis_json, get_code, connect_db
+from ..CQUGetter_old import CQUGetter
+from ..tools import analysis_json, connect_db
+
+from CQU321.interface_processing.student_interface import *
+from CQU321.utils.tools import post_json_analyses, launch_return_data, launch_template_data
 
 import json
 import re
@@ -118,53 +120,16 @@ def all_activity(request):
 @csrf_exempt
 def get_score(request):
     if request.method == 'POST' and request.body:
-        post_json = request.body.decode('utf-8')
-        post = json.loads(post_json)
-        paras = analysis_json(post, ['Key', 'Sid', 'UserName', 'Password', 'Code', 'NeedAll'], ['Debug'])
-        connection, cursor = connect_db()
-        return_value = {}
-        res = re.match(r'[\u4E00-\u9FA5]+', paras['Sid'])
-        if res is not None:
-            paras['Statue'] = 0
-            paras['ErrorCode'] = 2
-            paras['ErrorInfo'] = 'Uncorrected Sid'
-        if paras['Statue'] == 1:
-            getter = CQUGetter(sid=paras['Sid'])
-            if getter.is_match(paras['UserName'], paras['Password']):
-                open_id = get_code(paras['Code'])
-                if open_id is not None:
-                    try:
-                        score_log = getter.get_score(connection, cursor, open_id, paras['NeedAll'])
-                    except mycqu.score.CQUWebsiteError:
-                        paras['Statue'] = 0
-                        paras['ErrorCode'] = 6
-                        paras['ErrorInfo'] = 'CQU website statue error, please try again later'
-                    else:
-                        if score_log is not None:
-                            return_value['ScoreLog'] = score_log
-                        else:
-                            paras['Statue'] = 0
-                            paras['ErrorCode'] = 3
-                            paras['ErrorInfo'] = 'There is no score information about this student'
-                else:
-                    paras['Statue'] = 0
-                    paras['ErrorCode'] = 4
-                    paras['ErrorInfo'] = 'Openid acquisition error'
-            else:
-                paras['Statue'] = 0
-                paras['ErrorCode'] = 5
-                paras['ErrorInfo'] = 'Account password unmatch'
-        return_value['Statue'] = paras['Statue']
-        if return_value['Statue'] == 0:
-            return_value['ErrorCode'] = paras['ErrorCode']
-            return_value['ErrorInfo'] = paras['ErrorInfo']
-        return_json = json.dumps(return_value)
-        return HttpResponse(return_json, content_type='application/json')
-    else:
-        return render(request, '321CQU/student_views/get_score.html')
+        params = post_json_analyses(request.body.decode('utf-8'), get_score_process.__name__)
+        score = get_score_process(params)
+        result = launch_return_data(score, get_score_process.__name__)
+        return JsonResponse(result)
+    elif request.method == 'GET':
+        version = request.GET.get('version')
+        sections = launch_template_data('获取成绩信息', get_score_process.__name__, version)
+        return render(request, '321CQU/api_template.html', context=sections)
 
 
-# 查询考试安排
 @csrf_exempt
 def get_exam(request):
     if request.method == 'POST' and request.body:
@@ -202,75 +167,40 @@ def get_exam(request):
         return render(request, '321CQU/student_views/get_exam.html')
 
 
-# 获取课表
 @csrf_exempt
 def get_course(request):
     if request.method == 'POST' and request.body:
-        post_json = request.body.decode('utf-8')
-        post = json.loads(post_json)
-        paras = analysis_json(post, ['Key', 'Sid', 'UserName', 'Password'])
-        res = re.match(r'[\u4E00-\u9FA5]+', paras['Sid'])
-        if res is not None:
-            paras['Statue'] = 0
-            paras['ErrorCode'] = 2
-            paras['ErrorInfo'] = 'Uncorrected Sid'
-        return_value = {}
-        if paras['Statue'] == 1:
-            getter = CQUGetter(sid=paras['Sid'], use_selenium=False)
-            if getter.is_match(paras['UserName'], paras['Password']):
-                course_log = getter.get_courses()
-                if course_log is not None and len(course_log):
-                    return_value['Courses'] = course_log
-                else:
-                    paras['Statue'] = 0
-                    paras['ErrorCode'] = 3
-                    paras['ErrorInfo'] = 'There is no courses information about this student'
-            else:
-                paras['Statue'] = 0
-                paras['ErrorCode'] = 4
-                paras['ErrorInfo'] = 'Account password unmatch'
-        return_value['Statue'] = paras['Statue']
-        if return_value['Statue'] == 0:
-            return_value['ErrorCode'] = paras['ErrorCode']
-            return_value['ErrorInfo'] = paras['ErrorInfo']
-        return_json = json.dumps(return_value)
-        return HttpResponse(return_json, content_type='application/json')
-    else:
-        return render(request, '321CQU/student_views/get_course.html')
+        params = post_json_analyses(request.body.decode('utf-8'), get_course_process.__name__)
+        courses = get_course_process(params)
+        result = launch_return_data(courses, get_course_process.__name__)
+        return JsonResponse(result)
+    elif request.method == 'GET':
+        version = request.GET.get('version')
+        sections = launch_template_data('查询课表', get_course_process.__name__, version)
+        return render(request, '321CQU/api_template.html', context=sections)
 
 
-# 获取学生选课信息
 @csrf_exempt
 def get_enrollment(request):
     if request.method == 'POST' and request.body:
-        post_json = request.body.decode('utf-8')
-        post = json.loads(post_json)
-        paras = analysis_json(post, ['Key', 'Sid', 'UserName', 'Password'])
-        res = re.match(r'[\u4E00-\u9FA5]+', paras['Sid'])
-        if res is not None:
-            paras['Statue'] = 0
-            paras['ErrorCode'] = 2
-            paras['ErrorInfo'] = 'Uncorrected Sid'
-        return_value = {}
-        if paras['Statue'] == 1:
-            getter = CQUGetter(sid=paras['Sid'], use_selenium=False)
-            if getter.is_match(paras['UserName'], paras['Password']):
-                course_log = getter.get_enrollment()
-                if course_log is not None and len(course_log):
-                    return_value['Courses'] = course_log
-                else:
-                    paras['Statue'] = 0
-                    paras['ErrorCode'] = 3
-                    paras['ErrorInfo'] = 'There is no enrolled courses information about this student'
-            else:
-                paras['Statue'] = 0
-                paras['ErrorCode'] = 4
-                paras['ErrorInfo'] = 'Account password unmatch'
-        return_value['Statue'] = paras['Statue']
-        if return_value['Statue'] == 0:
-            return_value['ErrorCode'] = paras['ErrorCode']
-            return_value['ErrorInfo'] = paras['ErrorInfo']
-        return_json = json.dumps(return_value)
-        return HttpResponse(return_json, content_type='application/json')
-    else:
-        return render(request, '321CQU/student_views/get_enrollment.html')
+        params = post_json_analyses(request.body.decode('utf-8'), get_enrollment_process.__name__)
+        enrollments = get_enrollment_process(params)
+        result = launch_return_data(enrollments, get_enrollment_process.__name__)
+        return JsonResponse(result)
+    elif request.method == 'GET':
+        version = request.GET.get('version')
+        sections = launch_template_data('选课课表查询', get_enrollment_process.__name__, version)
+        return render(request, '321CQU/api_template.html', context=sections)
+
+
+@csrf_exempt
+def get_gpa_ranking(request):
+    if request.method == 'POST' and request.body:
+        params = post_json_analyses(request.body.decode('utf-8'), get_gpa_ranking_process.__name__)
+        gpa_ranking = get_gpa_ranking_process(params)
+        result = launch_return_data(gpa_ranking, get_gpa_ranking_process.__name__)
+        return JsonResponse(result)
+    elif request.method == 'GET':
+        version = request.GET.get('version')
+        sections = launch_template_data('绩点、排名查询', get_gpa_ranking_process.__name__, version)
+        return render(request, '321CQU/api_template.html', context=sections)

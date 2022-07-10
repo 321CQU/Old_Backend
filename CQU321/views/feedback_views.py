@@ -24,7 +24,6 @@ def send_feedback(request):
             try:
                 cursor.execute(sql, (paras['Sid'], paras['Content'], now_str))
                 connection.commit()
-                return_value['Statue'] = 1
             except:
                 connection.rollback()
                 paras['Statue'] = 0
@@ -52,19 +51,11 @@ def get_feedback(request):
         if paras['Statue'] == 1:
             if paras['Limit'] is not None:
                 limit = paras['Limit']
-                if ',' in str(limit):
-                    limit = limit.split(',')
-                    sql = 'select F.FBid, F.Sid, UI.UserName, UI.UserImg, F.Content, F.Ftime, count(C.Comid) from Feedback F ' \
-                          'left join Comment C on F.FBid = C.FBid ' \
-                          'left join UserInfo UI on F.Sid = UI.Sid group by F.FBid, F.Ftime order by F.Ftime desc ' \
-                          'limit %s, %s'
-                    cursor.execute(sql, (int(limit[0]), int(limit[1])))
-                else:
-                    sql = 'select F.FBid, F.Sid, UI.UserName, UI.UserImg, F.Content, F.Ftime, count(C.Comid) from Feedback F ' \
-                          'left join Comment C on F.FBid = C.FBid ' \
-                          'left join UserInfo UI on F.Sid = UI.Sid group by F.FBid, F.Ftime order by F.Ftime desc ' \
-                          'limit %s'
-                    cursor.execute(sql, (int(limit),))
+                sql = "select F.FBid, F.Sid, UI.UserName, UI.UserImg, F.Content, F.Ftime, count(C.Comid) from Feedback F " \
+                      "left join Comment C on F.FBid = C.FBid " \
+                      "left join UserInfo UI on F.Sid = UI.Sid group by F.FBid, F.Ftime order by F.Ftime desc " \
+                      f"limit {paras['Limit']}"
+                cursor.execute(sql)
             else:
                 sql = 'select F.FBid, F.Sid, UI.UserName, UI.UserImg, F.Content, F.Ftime, count(C.Comid) from Feedback F ' \
                           'left join Comment C on F.FBid = C.FBid ' \
@@ -96,7 +87,6 @@ def get_feedback(request):
         return render(request, '321CQU/feedback_views/get_feedback.html')
 
 
-# 发送小程序评论
 @csrf_exempt
 def send_comment(request):
     if request.method == 'POST' and request.body:
@@ -127,7 +117,6 @@ def send_comment(request):
         return render(request, '321CQU/feedback_views/send_comment.html')
 
 
-# 获取小程序评论
 @csrf_exempt
 def get_comment(request):
     if request.method == 'POST' and request.body:
@@ -152,7 +141,7 @@ def get_comment(request):
                     cursor.execute(sql, (paras['FBid'], int(limit),))
             else:
                 sql = 'select C.Sid, UI.UserName, UI.UserImg, C.Content, C.Ctime ' \
-                      'from Comment C join UserInfo UI on C.Sid = UI.Sid where C.FBid = %s order by Ctime desc'
+                      'from Comment C left join UserInfo UI on C.Sid = UI.Sid where C.FBid = %s order by Ctime desc'
                 cursor.execute(sql, (paras['FBid'],))
 
             result = cursor.fetchall()

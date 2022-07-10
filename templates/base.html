@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block title %}
     <title>Title</title>
     {% endblock %}
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+    <script src="{% static 'bootstrap/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
 </head>
-    {% block body %}
-    {% endblock %}
-    <br>
-    <hr style="FILTER:alpha(opacity=100,finish-opacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
-    <div style="text-align: center">
-        <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021010721号-1</a>
-    </div>
-    <div style="width:300px;margin:0 auto; padding:20px 0;">
-        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=36010202000544" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="/static/备案图标.png" style="float:left;"/><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">赣公网安备 36010202000544号</p></a>
+<body class="bg-light position-relative">
+    <ul class="nav bg-primary bg-gradient bg-opacity-75">
+        <li class="nav-item rounded-circle">
+            <a href="{% url '321CQU:api_page' %}">
+                <img src="{% static '321CQU-128.png' %}" alt="321CQU logo" width="70px" class="mx-3 my-2"/>
+            </a>
+        </li>
+    </ul>
+    <div class="container mt-4 rounded gy-3">
+
+        {% block body %}
+        {% endblock %}
+        <br>
+        <hr style="FILTER:alpha(opacity=100,finish-opacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+        <div style="text-align: center">
+            <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021010721号-1</a>
+        </div>
+        <div style="width:300px;margin:0 auto; padding:20px 0;">
+            <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=36010202000544" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="/static/备案图标.png" style="float:left;"/><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">赣公网安备 36010202000544号</p></a>
+        </div>
     </div>
 </body>
 </html>

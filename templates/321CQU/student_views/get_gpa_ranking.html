@@ -1,0 +1,71 @@
+{% extends '321CQU/api_base.html' %}
+{% block title %}
+    <title>根据房间号获取宿舍水电费信息</title>
+{% endblock %}
+{% block input_paras %}
+    <tr>
+        <td>Key</td>
+        <td>String</td>
+        <td>用于校验申请合法性的密码</td>
+    </tr>
+    <tr>
+        <td>UserName</td>
+        <td>String</td>
+        <td>账号</td>
+    </tr>
+    <tr>
+        <td>Password</td>
+        <td>String</td>
+        <td>密码</td>
+    </tr>
+{% endblock %}
+{% block return_paras %}
+    <tr>
+        <td>Statue</td>
+        <td>int</td>
+        <td>成功返回1，失败返回0</td>
+    </tr>
+    <tr>
+        <td>GpaRanking(dict)</td>
+        <td>String</td>
+        <td>绩点排名相关</td>
+    </tr>
+    <tr>
+        <td>gpa(GpaRanking)</td>
+        <td>String</td>
+        <td>绩点</td>
+    </tr>
+    <tr>
+        <td>majorRanking(GpaRanking)</td>
+        <td>String</td>
+        <td>专业排名</td>
+    </tr>
+    <tr>
+        <td>gradeRanking(GpaRanking)</td>
+        <td>String</td>
+        <td>年级排名</td>
+    </tr>
+    <tr>
+        <td>classRanking(GpaRanking)</td>
+        <td>String</td>
+        <td>班级排名</td>
+    </tr>
+{% endblock %}
+{% block error_info %}
+    <tr>
+        <td>0</td>
+        <td>Key不正确</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>参数不正确</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>绩点排名获取错误</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>账号密码错误</td>
+    </tr>
+{% endblock %}

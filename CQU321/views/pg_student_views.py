@@ -2,14 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from ..CQUGetter import CQUGetter
+from ..CQUGetter_old import CQUGetter
 from ..tools import analysis_json
 
 import json
 import re
 
-
-# 研究生账号密码匹配验证
 @csrf_exempt
 def pg_is_match(request):
     if request.method == 'POST' and request.body:
@@ -38,7 +36,6 @@ def pg_is_match(request):
         return render(request, '321CQU/pg_student_views/pg_is_match.html')
 
 
-# 获取研究生成绩
 @csrf_exempt
 def pg_get_score(request):
     if request.method == 'POST' and request.body:

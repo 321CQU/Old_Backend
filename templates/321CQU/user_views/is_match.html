@@ -8,11 +8,11 @@
         <td>String</td>
         <td>用于校验申请合法性的密码</td>
     </tr>
-    <tr>
-        <td>Sid</td>
-        <td>String</td>
-        <td>用户学号</td>
-    </tr>
+{#    <tr>#}
+{#        <td>Sid</td>#}
+{#        <td>String</td>#}
+{#        <td>用户学号</td>#}
+{#    </tr>#}
     <tr>
         <td>UserName</td>
         <td>String</td>
@@ -23,16 +23,16 @@
         <td>String</td>
         <td>统一认证密码</td>
     </tr>
-    <tr>
-        <td>Code</td>
-        <td>String</td>
-        <td>小程序用户临时标识码</td>
-    </tr>
-    <tr>
-        <td>NeedAll</td>
-        <td>bool</td>
-        <td>是否需要获取所有相关信息（目前只有所有学期成绩，后续会加入课表等）</td>
-    </tr>
+{#    <tr>#}
+{#        <td>Code</td>#}
+{#        <td>String</td>#}
+{#        <td>小程序用户临时标识码</td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td>NeedAll</td>#}
+{#        <td>bool</td>#}
+{#        <td>是否需要获取所有相关信息（目前只有所有学期成绩，后续会加入课表等）</td>#}
+{#    </tr>#}
 {% endblock %}
 {% block return_paras %}
     <tr>
@@ -41,30 +41,40 @@
         <td>成功返回1，失败返回0</td>
     </tr>
     <tr>
-        <td>term(dict(ScoreLog):key)</td>
-        <td>string</td>
-        <td>成绩所在学期（例如返回“2021秋”）</td>
+        <td>Sid</td>
+        <td>String</td>
+        <td>用户学号</td>
     </tr>
     <tr>
-        <td>Cname(dict(ScoreLog):value)</td>
-        <td>string</td>
-        <td>课程名称</td>
+        <td>Name</td>
+        <td>String</td>
+        <td>用户姓名</td>
     </tr>
-    <tr>
-        <td>Credit(dict(ScoreLog):value)</td>
-        <td>float</td>
-        <td>课程学分</td>
-    </tr>
-    <tr>
-        <td>EffectiveScoreShow(dict(ScoreLog):value)</td>
-        <td>string</td>
-        <td>课程分数（可能为数字也可能为优、良等字符）</td>
-    </tr>
-    <tr>
-        <td>StudyNature(dict(ScoreLog):value)</td>
-        <td>string</td>
-        <td>课程性质（初修/重修）</td>
-    </tr>
+{#    <tr>#}
+{#        <td>term(dict(ScoreLog):key)</td>#}
+{#        <td>string</td>#}
+{#        <td>成绩所在学期（例如返回“2021秋”）</td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td>Cname(dict(ScoreLog):value)</td>#}
+{#        <td>string</td>#}
+{#        <td>课程名称</td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td>Credit(dict(ScoreLog):value)</td>#}
+{#        <td>float</td>#}
+{#        <td>课程学分</td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td>EffectiveScoreShow(dict(ScoreLog):value)</td>#}
+{#        <td>string</td>#}
+{#        <td>课程分数（可能为数字也可能为优、良等字符）</td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td>StudyNature(dict(ScoreLog):value)</td>#}
+{#        <td>string</td>#}
+{#        <td>课程性质（初修/重修）</td>#}
+{#    </tr>#}
 {% endblock %}
 {% block error_info %}
     <tr>

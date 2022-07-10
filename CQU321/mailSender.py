@@ -1,5 +1,3 @@
-# 用于志愿活动文件邮箱发送功能
-
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
@@ -9,9 +7,9 @@ from email.header import Header
 
 class mailSender():
     def __init__(self, receiver, file_paths, receiver_name):
-        self.SMTP_host = '******'
-        self.sender = '********'
-        self.password = '******'
+        self.SMTP_host = 'mail.zhulegend.com'
+        self.sender = '321cqu@zhulegend.com'
+        self.password = 'CQUz5321'
         self.receiver = [receiver]
         self.name = receiver_name
         self.message = MIMEMultipart()
@@ -49,4 +47,9 @@ class mailSender():
 
     def get_response(self):
         return self.is_success
+
+
+
+if __name__ == '__main__':
+    sender = mailSender('2961163526@qq.com', ['./刘泯杉+王超+朱子骏+重庆大学.pdf'], "朱子骏")
 
