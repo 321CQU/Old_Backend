@@ -5,7 +5,7 @@ import logging
 from queue import LifoQueue, Empty
 import requests
 from requests.adapters import BaseAdapter, HTTPAdapter
-from requests import adapters, Response, PreparedRequest, Timeout, sessions
+from requests import adapters, Response, PreparedRequest, Timeout, sessions, utils
 
 _logger = logging.getLogger(__name__)
 
@@ -35,9 +35,13 @@ class HTTPAdapterQueue:
  :type queue_timeout: float, optional
  """
 
-    def __init__(self, domains: Dict[str, int], other: Optional[int] = None, queue_timeout: float = 8):
+    def __init__(self, domains: Dict[str, int], other: Optional[int] = None, queue_timeout: float = 8, default_user_agent: Optional[str] = None):
 
         self.queue_timeout = queue_timeout
+        origin_default_user_agent = utils.default_user_agent()
+        if default_user_agent is None:
+            default_user_agent = origin_default_user_agent
+        assert isinstance(default_user_agent, str)
 
         adapters: Dict[str, LifoQueue[HTTPAdapter]] = {
             domain: LifoQueue(maxsize=num) for domain, num in (domains or {}).items()
@@ -74,7 +78,9 @@ class HTTPAdapterQueue:
                      cert: Union[None, bytes, str,
                                  Container[Union[bytes, str]]] = None,
                      proxies: Optional[Mapping[str, str]] = None) -> Response:
-                with adapter_queue.adapter(request.url, timeout=timeout, adapter_ctor=self.http_adapter) as adapter:
+                if request.headers.get('User-Agent') == origin_default_user_agent:
+                    request.headers['User-Agent'] = default_user_agent
+                with adapter_queue.adapter(request.url, timeout=timeout) as adapter:
                     return adapter.send(request, stream, timeout, verify, cert, proxies)
 
         self.adapter_class: Type[BaseAdapter] = QueuedAdapter
@@ -128,18 +134,18 @@ class HTTPAdapterQueue:
     def adapter(self,
                 url: Optional[str],
                 timeout: Union[None, float,
-                               Tuple[float, Optional[float]]] = None,
-                adapter_ctor: Callable[[], HTTPAdapter] = HTTPAdapter) -> ContextManager[HTTPAdapter]:
+                               Tuple[float, Optional[float]]] = None
+                ) -> ContextManager[HTTPAdapter]:
         """获取对应 ``协议://域名`` 的 HTTPAdapter 的一个上下文管理器
 
-     :param url: URL
-     :type url: Optional[str]
-     :param timeout: 超时设置，和 HTTPAdapter.send 中 timeout 参数格式、含义一致
-     :type timeout: Union[None, float, Tuple[float, Optional[float]]]
-     :raises QueueBusyException: 队列忙并且超过最大等待时间时抛出
-     :return: HTTPAdapter 的上下文管理器
-     :rtype: Optional[HTTPAdapter]
-     """
+        :param url: URL
+        :type url: Optional[str]
+        :param timeout: 超时设置，和 HTTPAdapter.send 中 timeout 参数格式、含义一致
+        :type timeout: Union[None, float, Tuple[float, Optional[float]]]
+        :raises QueueBusyException: 队列忙并且超过最大等待时间时抛出
+        :return: HTTPAdapter 的上下文管理器
+        :rtype: Optional[HTTPAdapter]
+        """
         return self._QueuedAdapterContext(self, url, timeout)
 
     def send(self,
